@@ -1,1 +1,39 @@
+wget https://raw.githubusercontent.com/therealelyayo/postalscript/main/install.sh
+chmod u+x install.sh
+edit domain into /opt/postal/config/postal.yml  (very necessary)
 
+
+run this to set domain  postal bootstrap postal.yourdomain.com
+
+postal initialize
+postal make-user
+
+postal start
+
+docker run -d \
+   --name postal-caddy \
+   --restart always \
+   --network host \
+   -v /opt/postal/config/Caddyfile:/etc/caddy/Caddyfile \
+   -v /opt/postal/caddy-data:/data \
+   caddy
+   
+   
+   
+   dns RECCORDS
+   
+   spf.postal  ====  v=spf1 a mx include:spf.postal.egaadee.co.in ip4:194.156.91.65 ip4:194.156.91.65 ip4:194.156.91.65 ~all
+
+   rp.postal.example.com	===A====    192.168.1.3
+   rp.postal.example.com	===TXT===   v=spf1 a mx include:spf.postal.example.com ~all
+   postal._domainkey.rp.postal.example.com   ====TXT=====    Value from postal default-dkim-record
+   
+   
+   
+   to add more domains use the domain as rdns for each added ip nd set spf
+   
+   
+   
+   
+   
+   
